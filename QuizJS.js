@@ -1,1 +1,1 @@
-Questioncount = document.getElementById('question-count')
+let questionCount = document.getElementById('question-count');
