@@ -1,53 +1,68 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  header{
-    display: flex;
-    padding: 1%;
-    justify-content: space-around;
-    background-color: bisque;
-
-  }
-  .question-choice-container{
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    border-radius: 10px;
-    width:80%;
-    height: 80%;
-  }
-  .question-desc{
-    background-color :hsl(101, 9%, 55%);
-    width:60% ;
-  }
-  .input-flex{
-    background-color:hsl(101, 9%, 80%) ;
-    display: flex;
-    flex-wrap: wrap;
-    width:40%;
-    height: 40%;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .Question{
-    display: flex;
-  }
-  .prev-next-buttons{
-    display: flex;
-    background-color: antiquewhite;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 0 auto;
-    border-radius: 10px;
-    width:80%;
-    height: 80px;
-  }
-  .primary-btn{
-
-    width:10%;
-   background-color: aqua;
-   border-radius: 10px;
-
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: hsl(39, 52%, 86%);
+}
+header {
+  display: flex;
+  padding: 1%;
+  justify-content: space-around;
+}
+#question-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: hsl(101, 9%, 65%);
+}
+.question-choice-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  border-radius: 20px;
+  width: 80%;
+  height: 240px;
+}
+.question-desc {
+  background-color: hsl(101, 9%, 55%);
+  width: 60%;
+}
+.input-flex {
+  background-color: hsl(39, 52%, 82%);
+  display: flex;
+  flex-wrap: nowrap;
+  padding-left: 2%;
+  padding-top: 3%;
+  width: 40%;
+  height: 100%;
+  flex-direction: column;
+  gap: 40px;
+}
+input {
+  margin-right: 3%;
+}
+.Question {
+  display: flex;
+  align-content: center;
+}
+.prev-next-buttons {
+  display: flex;
+  background-color: antiquewhite;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding: 21px;
+  border-radius: 10px;
+  width: 80%;
+  height: 80px;
+}
+.primary-btn {
+  width: 10%;
+  background-color: hsl(101, 9%, 55%);
+  border-radius: 10px;
+}
+.primary-btn:hover {
+  background-color: hsl(101, 9%, 65%);
+}
