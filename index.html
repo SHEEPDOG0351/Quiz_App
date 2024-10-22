@@ -41,10 +41,6 @@
         transition: 0.2s ease-in;
     }
 
-    input:hover {
-        
-    }
-
     #title {
         text-align: center;
         font-size: 60px;
@@ -68,15 +64,16 @@
     ul li input {
         font-size: 20px;
         padding: 5px;
-        width: 400px;
+        width: 247px;
     }
 
     .input-wrapper button {
         position: absolute;
-        left: 180px;
-        top: 0;
-        display: none; /* Initially hidden */
-        background-color: hsl(202, 98%, 50%);
+        left: 250px;
+        top: 50%;  /* Set top to 50% to position the button relative to the input */
+        transform: translateY(-50%);  /* Vertically center the button */
+        display: none;
+        background-color: rgb(3, 161, 252);
         color: black;
         border: none;
         padding: 5px 10px;
@@ -92,12 +89,6 @@
 
     .input-wrapper:hover button {
         display: inline-block;
-    }
-
-    .input-wrapper button:focus {
-        background-color: rgb(52, 235, 82);
-        color: black;
-        border: 2px rgb(52, 235, 82) solid;
     }
 
     .button-container {
@@ -119,6 +110,10 @@
         color: black;
         border: 2px solid white;
         transition: 0.2s ease-in;
+    }
+
+    .add-button-container {
+        padding-left: 6px;
     }
 
     .add-button-container button {
@@ -146,22 +141,26 @@
     <div class="question-container">
         <input class="question" type="text" placeholder="Type Question Here">
         <ul>
-            <div class="input-wrapper">
-                <input type="text" placeholder="Type possible answer here">
-                <button>Select as correct</button>
-            </div>
-            <div class="input-wrapper">
-                <input type="text" placeholder="Type possible answer here">
-                <button>Select as correct</button>
-            </div>
+            <li>
+               <div class="input-wrapper">
+                    <input type="text" placeholder="Type possible answer here">
+                    <button class="correct-btn">Select as correct</button>
+                </div> 
+            </li>
+            <li>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Type possible answer here">
+                    <button class="correct-btn">Select as correct</button>
+                </div> 
+            </li>
         </ul>
         <div class="add-button-container">
-            <button>Add Answer Choice Above</button>
+            <button id="answer-choice-btn">Add Answer Choice Above</button>
         </div>
     </div>
     <div class="button-container">
         <button>Finish Quiz</button>
     </div>
-    
+    <script src="Javascript.js"></script>
 </body>
 </html>
