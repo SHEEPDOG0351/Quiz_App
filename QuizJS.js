@@ -1,0 +1,1 @@
+Questioncount = document.getElementById('question-count')
