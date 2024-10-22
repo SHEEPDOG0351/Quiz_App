@@ -3,40 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Quizpage</title>
     <link rel="stylesheet" href="QuizPage.css" />
   </head>
   <body>
     <header>
       <p><a href="index.html">Add question</a></p>
-      <button>Reset</button>
+      <button id ="resetbtn">Reset</button>
     </header>
     <section class="question-choice-container">
       <div class="question-desc">
-        <h3 id="question-count">Question</h3>
+        <h3 id="question-count">Question 1</h3>
         <p></p>
       </div>
       <div class="input-flex">
         <section class="Questions">
-          <input type="radio" name="question" id="choice1" /><label
+          <input type="radio" name="question" id="choice1" /><label class="option-title"
             for="choice1"
             >Choice 1</label
           >
         </section>
         <section class="Questions">
-          <input type="radio" name="question" id="choice2" /><label
+          <input type="radio" name="question" id="choice2" /><label class="option-title"
             for="choice2"
             >Choice 2</label
           >
         </section>
         <section class="Questions">
-          <input type="radio" name="question" id="choice3" /><label
+          <input type="radio" name="question" id="choice3" /><label class="option-title"
             for="choice3"
             >Choice 3</label
           >
         </section>
         <section class="Questions">
-          <input type="radio" name="question" id="choice4" /><label
+          <input type="radio" name="question" id="choice4" /><label class="option-title"
             for="choice4"
             >Choice 4</label
           >
@@ -47,6 +47,6 @@
       <button class="primary-btn prev-btn" id="previous">Previous</button>
       <button class="primary-btn next-btn" id="next">Next</button>
     </section>
-    <script src="QuizJS.js"></script>
+    <script src="Javascript.js"></script>
   </body>
 </html>
