@@ -9,6 +9,7 @@ body {
   font-family: "Raleway", Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 2px;
+  color:white;
 }
 header {
   display: flex;
@@ -16,34 +17,42 @@ header {
   justify-content: space-around;
 }
 
-#questionAddlink , #resetbtn{
+#questionAddlink,
+#resetbtn {
+  text-align: center;
+  min-width: 10%;
+  background-color: hsl(202, 98%, 50%);
+  border-radius: 5px;
+  border: none;
+  padding: 8px 10px;
+}
+#questionAddlink:link,
+#questionAddlink:visited {
+  color: black;
+  text-decoration: none;
+}
+#questionAddlink:hover,
+#resetbtn:hover {
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 100%);
+  color: black;
+  transition: 0.2s ease-in;
+}
+#questionAddlink:active {
+  color: black;
+  text-decoration: none;
+}
+#quiz-title{
     text-align: center;
-    width: 10%;
-    background-color: hsl(202, 98%, 50%);
-    border-radius: 5px;
-    border: none;
-    padding: 8px 10px;
+      font-size: 60px;
+      padding-top: 10px;
 }
-#questionAddlink:link, #questionAddlink:visited{
-    color:black;
-    text-decoration: none;
-}
-#questionAddlink:hover, #resetbtn:hover{
-    background-color: hsl(0, 0%, 100%);
-    border-color:hsl(0, 0% ,100%);
-    color:black;
-    transition: 0.2s ease-in;
-}
-#questionAddlink:active{
-    color:black;
-    text-decoration:none ;
-}
-#question-count {
+.question-count {
   display: flex;
   flex-direction: column;
   padding: 10px 10px;
   align-items: center;
-  color: hsl(0, 0% ,100%);
+  color: hsl(0, 0%, 100%);
   background-color: hsl(0, 0%, 20%);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -55,59 +64,59 @@ header {
   border-radius: 20px;
   width: 80%;
   height: 300px;
-  gap:10px;
+  gap: 10px;
 }
 .question-desc {
-  background-color: hsl(0, 0%, 15%);
+  background-color: hsla(0, 0%, 100%, 0.1);
   border-radius: 20px;
   width: 60%;
 }
 .input-flex {
-  background-color: hsl(0, 0%, 15%);
+  background-color: hsla(0, 0%, 100%, 0.1);
   border-radius: 20px;
   display: flex;
-  align-self: flex-end;
   flex-wrap: nowrap;
-  padding-left: 2%;
-  padding-top: 3%;
+
   width: 40%;
-  height: 90%;
+  height: 100%;
   flex-direction: column;
   gap: 40px;
-  color:white;
+  color: white;
 }
 input {
   margin-right: 3%;
   background-color: hsl(202, 98%, 50%);
   border: none;
   color: white;
-  padding: 3px;
+  min-width: 50px;
 }
 .Question {
   display: flex;
   align-content: center;
- 
 }
 .prev-next-buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin: 0 auto;
-  padding: 21px;
-  /* border-radius: 10px; */
-  width: 80%;
-  height: 80px;
+  
+  padding: 1%;
+  padding-top: 21px;
+  
+  /* min-width: 80%; */
+  /* height: 80%; */
 }
 .primary-btn {
-  width: 10%;
+    text-align: center;
+  min-width: 10%;
+  min-height:20%;
   background-color: hsl(202, 98%, 50%);
   border-radius: 5px;
   border: none;
-  padding: 5px 10px;
+  padding: 8px 10px;
 }
 .primary-btn:hover {
   background-color: hsl(0, 0%, 100%);
-  border-color:hsl(0, 0% ,100%);
-  color:black;
+  border-color: hsl(0, 0%, 100%);
+  color: black;
   transition: 0.2s ease-in;
 }

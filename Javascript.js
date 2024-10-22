@@ -1,5 +1,8 @@
+let quizTitle="";
+function initializeQuizPage(){
 let questionCount = document.getElementById("question-count");
 let optionTitle = document.querySelectorAll(".option-title");
+const titleElement = document.getElementById('title');
 let nextbtn = document.getElementById("next");
 let prevbtn = document.getElementById("previous");
 let resetbtn = document.getElementById("resetbtn");
@@ -25,13 +28,17 @@ prevbtn.addEventListener("click", function () {
 optionTitle.forEach((option) => {
   // optionTitle.innerHTML =
 });
+}
 // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
+function initializeQuestionPage(){
+    let answerChoiceCount = 2; //counts how many questions tthere are
 // Get the 'Add Answer Choice' button and the 'ul' container inside the question container
 var answer_choice_button = document.getElementById("answer-choice-btn");
 var question_container = document.querySelector(".question-container ul"); // Select the ul inside .question-container
 
 // Handles intended functionality for the add answer choice button
 answer_choice_button.addEventListener("click", function () {
+    if(answerChoiceCount<4){ //
   // The HTML for the new answer choice
   var code = `<li>
                     <div class="input-wrapper">
@@ -42,6 +49,11 @@ answer_choice_button.addEventListener("click", function () {
 
   // Append the new answer choice to the 'ul' container
   question_container.innerHTML += code;
+  answerChoiceCount++
+    }
+    else{ // won't allow user to add more options  max = 4
+        alert("That's enough, buddy!!!")
+    }
 });
 
 // Event delegation: Attach a single event listener to the 'ul' container
@@ -70,3 +82,13 @@ function correct_btn_clicked(button) {
   // Flip the value of the flag for the next click
   button.isGreen = !button.isGreen;
 }
+}
+//Checks the current page for the specific ID. If found it will initializes the right functions
+document.addEventListener("DOMContentLoaded", function(){
+    if (document.getElementById("questionAddlink")){ 
+        initializeQuizPage();
+    }
+    else if (document.getElementById("quizAddLink")){
+        initializeQuestionPage();
+    }
+})
