@@ -1,10 +1,11 @@
 function initializeQuizPage() {
   let quizTitleElement = document.getElementById("quiz-title");
-  let quizTitle = sessionStorage.getItem("QuizTitle");
+  //-- 
+  let quizTitle = sessionStorage.getItem("QuizTitle");// retrieves data from SessionStorage
   quizTitleElement.textContent = quizTitle;
+  //--
   let questionCount = document.getElementById("question-count");
   let optionTitle = document.querySelectorAll(".option-title");
-  const titleElement = document.getElementById("title");
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
@@ -16,7 +17,7 @@ function initializeQuizPage() {
   nextbtn.addEventListener("click", function () {
     //question counter up
     count++;
-    questionCount.innerHTML = "Question" + " " + count;
+    questionCount.innerText = "Question" + " " +count;
   });
   prevbtn.addEventListener("click", function () {
     //question counter down and doesn't let it below '1'
@@ -85,12 +86,14 @@ function initializeQuestionPage() {
     // Flip the value of the flag for the next click
     button.isGreen = !button.isGreen;
   }
+
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
+  //Stores the title info once clicking 
   submitbtn.addEventListener("click", function (e) {
-    e.preventDefault();
+    e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
     let quizTitle = quizTitleElement.value;
-    sessionStorage.setItem("QuizTitle", quizTitle);
+    sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
     window.location.href = "Quizpage.html";
   });
 }
