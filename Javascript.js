@@ -29,7 +29,11 @@ function initializeQuizPage() {
       questionCount.textContent = "Question " + count;
     }
   });
-  let possibleAnswers = sessionStorage.getItem("");
+  let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
+  let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
+  possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
+    
+  });
 }
 // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
 function initializeQuestionPage() {
@@ -43,15 +47,22 @@ function initializeQuestionPage() {
     if (answerChoiceCount < 4) {
       //
       // The HTML for the new answer choice
-      var code = `<li>
+      // var code = `<li>
+      //               <div class="input-wrapper">
+      //                   <input class ="possibleAnswer" type="text" placeholder="Type possible answer here">
+      //                   <button class='correct-btn'>Select as correct</button>
+      //               </div>
+      //           </li>`;
+
+      let li = document.createElement('li');
+      li.innerHTML = `<li>
                     <div class="input-wrapper">
-                        <input type="text" placeholder="Type possible answer here">
+                        <input class ="possibleAnswer" type="text" placeholder="Type possible answer here">
                         <button class='correct-btn'>Select as correct</button>
                     </div>
-                </li>`;
-
+                </li>`
       // Append the new answer choice to the 'ul' container
-      question_container.innerHTML += code;
+      question_container.appendChild(li)
       answerChoiceCount++;
     } else {
       // won't allow user to add more options  max = 4
@@ -88,11 +99,16 @@ function initializeQuestionPage() {
   //----
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
-  let possibleAnswerElement = document.get;
+  let possibleAnswerElement = document.getElementsByClassName("possibleAnswer")  
+  let possibleAnswerArray;
+
   //Stores the title info once clicking
   submitbtn.addEventListener("click", function (e) {
     e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
+  
     let quizTitle = quizTitleElement.value;
+    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value) //.map to extract the values from html
+    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
     sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
     window.location.href = "Quizpage.html";
   });
