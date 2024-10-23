@@ -93,7 +93,99 @@ function initializeQuestionPage() {
     // Function to handle adding a new answer choice
     function addAnswerChoice(event) {
         let answerList = event.target.closest('.question-block').querySelector('.answer-list');
+  let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
+  let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
+  possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
 
+  let questionTitleElement = document.getElementById("question-title");
+  let questionTitle = JSON.parse(sessionStorage.getItem("QuestionTitle").split(",")); // brings the QuestionTitle from initializeQuestionPage
+  questionTitleElement.textContent = questionTitle;
+  
+  });
+}
+  // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
+  function initializeQuestionPage() {
+    let answerChoiceCount = 2; //counts how many questions tthere are
+    // Get the 'Add Answer Choice' button and the 'ul' container inside the question container
+    var answer_choice_button = document.getElementById("answer-choice-btn");
+    var question_container = document.querySelector(".question-container ul"); // Select the ul inside .question-container
+    let correct_answers = []
+  
+    // Handles intended functionality for the add answer choice button
+    answer_choice_button.addEventListener("click", function () {
+      if (answerChoiceCount < 4) {
+        //
+        // The HTML for the new answer choice
+        let li = document.createElement('li');
+        li.innerHTML = `<li>
+                      <div class="input-wrapper">
+                          <input class = "possibleAnswer"type="text" placeholder="Type possible answer here">
+                          <button id="data-question-id" class='correct-btn'>Select as correct</button>
+                      </div>
+                  </li>`;
+  
+        // Append the new answer choice to the 'ul' container
+        question_container.appendChild(li)
+        answerChoiceCount++;
+      } else {
+        // won't allow user to add more options  max = 4
+        alert("That's enough, buddy!!!");
+      }
+    });
+  
+    // Event delegation: Attach a single event listener to the 'ul' container
+    question_container.addEventListener("click", function (event) {
+      if (event.target && event.target.classList.contains("correct-btn")) {
+        correct_btn_clicked(event.target); // Pass the clicked button
+      }
+    });
+  
+    // Handle turning the button green on and off
+    function correct_btn_clicked(button) {
+      if (button.isGreen === undefined) {
+        button.isGreen = true; // Initialize the flag if it's not set
+      }
+      // Toggle the button's background color based on the flag
+      if (button.isGreen) {
+        button.style.backgroundColor = "rgb(52, 235, 82)";
+        button.style.border = "2px solid rgb(52, 235, 82)";
+        button.style.color = "black";
+      } else {
+        button.style.backgroundColor = "rgb(3, 161, 252)";
+        button.style.border = "2px solid rgb(3, 161, 252)";
+        button.style.color = "black";
+      }
+  
+      // Flip the value of the flag for the next click
+      button.isGreen = !button.isGreen;
+   }
+  
+  //----------
+  let quizTitleElement = document.getElementById("title");
+  let submitbtn = document.getElementById("submit-quiz-btn");
+  let questionTitleElement = document.getElementsByClassName("question")
+  let questionSequenceArray;
+  let possibleAnswerElement = document.getElementsByClassName("possibleAnswer")  
+  let possibleAnswerArray;
+
+  //Stores the title info once clicking
+  submitbtn.addEventListener("click", function (e) {
+    e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
+  
+    let quizTitle = quizTitleElement.value;
+    sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
+
+    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value); //.map to extract the values from html
+    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
+   
+    questionSequenceArray = Array.from(questionTitleElement).map(element => element.value);
+    sessionStorage.setItem ("QuestionTitle",JSON.stringify(questionSequenceArray));
+    window.location.href = "Quizpage.html";
+  });
+  //------------
+  // First, only starts applying the correct answers in the array once the submit button is pressed. 
+  // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
+  document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)
         if (answerChoiceCount < 4) {
             let li = document.createElement('li');
             li.innerHTML = `
