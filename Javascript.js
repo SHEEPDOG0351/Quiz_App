@@ -33,32 +33,79 @@ function initializeQuizPage() {
   }
   // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
   function initializeQuestionPage() {
-    let answerChoiceCount = 2; //counts how many questions tthere are
+    let answerChoiceCount = 2; //counts how many questions there are
     // Get the 'Add Answer Choice' button and the 'ul' container inside the question container
-    var answer_choice_button = document.getElementById("answer-choice-btn");
-    var question_container = document.querySelector(".question-container ul"); // Select the ul inside .question-container
+    var answer_choice_button = document.querySelector("#answer-choice-btn");
+    var all_answer_choice_buttons = document.querySelectorAll('#answer-choice-btn')
+    var question_container = document.querySelector(".question-container ul"); // Selects the ul inside .question-container
+    var new_question_button = document.getElementById('new-question-btn')
+    var add_button_container = document.querySelector('.add-button-container')
     let correct_answers = []
   
     // Handles intended functionality for the add answer choice button
-    answer_choice_button.addEventListener("click", function () {
-      if (answerChoiceCount < 4) {
-        //
-        // The HTML for the new answer choice
-        var code = `<li>
-                      <div class="input-wrapper">
-                          <input type="text" placeholder="Type possible answer here">
-                          <button id="data-question-id" class='correct-btn'>Select as correct</button>
-                      </div>
-                  </li>`;
-  
-        // Append the new answer choice to the 'ul' container
-        question_container.innerHTML += code;
-        answerChoiceCount++;
-      } else {
-        // won't allow user to add more options  max = 4
-        alert("That's enough, buddy!!!");
-      }
-    });
+    for (i = 0; i < answer_choice_button.length; i++) {
+        answer_choice_button[i].addEventListener("click", function () {
+            if (answerChoiceCount < 4) {
+                // The HTML for the new answer choice
+            let li = document.createElement('li');
+            li.innerHTML = `
+                        <div class="input-wrapper">
+                            <input class = "possibleAnswer"type="text" placeholder="Type possible answer here">
+                            <button class='correct-btn'>Select as correct</button>
+                        </div>
+                    `
+
+            // Append the new answer choice to the 'ul' container
+            question_container.appendChild(li)
+            answerChoiceCount++
+            } else {
+                alert(`That's enough, buddy!!!`)
+            }
+        }
+        )}
+
+        new_question_button.addEventListener('click', function () {
+            var code = `<input class="question" type="text" placeholder="Type Question Here" />
+                            <ul>
+                                <li>
+                                <div class="input-wrapper">
+                                    <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                                    <button class="correct-btn">Select as correct</button>
+                                </div>
+                                </li>
+                                <li>
+                                <div class="input-wrapper">
+                                    <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                                    <button class="correct-btn">Select as correct</button>
+                                </div>
+                                </li>
+                            </ul>
+                            <button class="add_buttons" id="answer-choice-btn">Add Answer Choice Above</button>`;
+            
+            add_button_container.insertAdjacentHTML('beforebegin', code);
+            
+            // Re-query for the new "Add Answer Choice" button
+            let all_answer_choice_buttons = document.querySelectorAll('#answer-choice-btn');
+            
+            let lastElement = all_answer_choice_buttons[all_answer_choice_buttons.length - 1];
+            
+            lastElement.addEventListener('click', function () {
+                if (answerChoiceCount < 4) {
+                    let li = document.createElement('li');
+                    li.innerHTML = `
+                                <div class="input-wrapper">
+                                    <input class="possibleAnswer" type="text" placeholder="Type possible answer here">
+                                    <button class='correct-btn'>Select as correct</button>
+                                </div>`;
+                    
+                    question_container.appendChild(li);
+                    answerChoiceCount++;
+                } else {
+                    alert(`That's enough, buddy!!!`);
+                }
+            });
+        });
+        
   
     // Event delegation: Attach a single event listener to the 'ul' container
     question_container.addEventListener("click", function (event) {
@@ -86,7 +133,7 @@ function initializeQuizPage() {
       // Flip the value of the flag for the next click
       button.isGreen = !button.isGreen;
     }
-    //----
+    
     let quizTitleElement = document.getElementById("title");
     let submitbtn = document.getElementById("submit-quiz-btn");
     let possibleAnswerElement = document.get;
@@ -94,10 +141,10 @@ function initializeQuizPage() {
     submitbtn.addEventListener("click", function (e) {
       e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
       let quizTitle = quizTitleElement.value;
-      sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
+      sessionStorage.setItem("QuizTitle", quizTitle); // Saves Data into browser
       window.location.href = "Quizpage.html";
     });
-  }
+}
 
   // Checks when answers are submitted
 
