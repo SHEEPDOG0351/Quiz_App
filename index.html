@@ -175,8 +175,7 @@
       padding-left: 6px;
     }
 
-    .add_buttons {
-        margin: 5px;
+    .add-button-container button {
       color: black;
       background-color: rgb(3, 161, 252);
       padding: 5px;
@@ -191,7 +190,7 @@
       font-size: 15px;
     }
 
-    .add_buttons:hover {
+    .add-button-container button:hover {
       background-color: white;
       color: black;
       border: 2px solid white;
@@ -204,7 +203,6 @@
     a:link {
       color: black;
       text-decoration: none;
-
     }
     a:hover {
       color: hsl(0, 0%, 100%);
@@ -216,47 +214,44 @@
   </style>
 
   <body>
-      <h2>
-        <input id="title" type="text" placeholder="Title of Quiz" />
-      </h2>
-      <div class="question-container">
-        <input class="question" type="text" placeholder="Type Question Here" />
-        <ul>
-          <li>
-            <div class="input-wrapper">
-              <input
-                class="possibleAnswer"
-                type="text"
-                placeholder="Type possible answer here"
-              />
-              <button id="data-question-id" class="correct-btn">
-                Select as correct
-              </button>
-            </div>
-          </li>
-          <li>
-            <div class="input-wrapper">
-              <input
-                class="possibleAnswer"
-                type="text"
-                placeholder="Type possible answer here"
-              />
-              <button id="data-question-id" class="correct-btn">
-                Select as correct
-              </button>
-            </div>
-          </li>
-        </ul>
-        <div class="add-button-container">
-          <button id="answer-choice-btn">Add Answer Choice Above</button>
-        </div>
-
+    <h2>
+      <input id="title" type="text" placeholder="Title of Quiz" />
+    </h2>
+    <div class="question-container">
+      <input class="question" type="text" placeholder="Type Question Here" />
+      <ul>
+        <li>
+          <div class="input-wrapper">
+            <input
+              class="possibleAnswer"
+              type="text"
+              placeholder="Type possible answer here"
+            />
+            <button id="data-question-id" class="correct-btn">
+              Select as correct
+            </button>
+          </div>
+        </li>
+        <li>
+          <div class="input-wrapper">
+            <input
+              class="possibleAnswer"
+              type="text"
+              placeholder="Type possible answer here"
+            />
+            <button id="data-question-id" class="correct-btn">
+              Select as correct
+            </button>
+          </div>
+        </li>
+      </ul>
+      <div class="add-button-container">
+        <button id="answer-choice-btn">Add Answer Choice Above</button>
       </div>
-      <div class="button-container">
-        <a id="quizAddLink"
-          ><button id="submit-quiz-btn">Finish Quiz</button></a
-        >
-      </div>
-      <script src="Javascript.js"></script>
-    </body>
+    </div>
+    <div class="button-container">
+      <a id="quizAddLink"><button id="submit-quiz-btn">Finish Quiz</button></a>
+    </div>
+    <script src="Javascript.js"></script>
+  </body>
 </html>
