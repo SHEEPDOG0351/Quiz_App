@@ -175,7 +175,8 @@
       padding-left: 6px;
     }
 
-    .add-button-container button {
+    .add_buttons {
+        margin: 5px;
       color: black;
       background-color: rgb(3, 161, 252);
       padding: 5px;
@@ -190,7 +191,7 @@
       font-size: 15px;
     }
 
-    .add-button-container button:hover {
+    .add_buttons:hover {
       background-color: white;
       color: black;
       border: 2px solid white;
@@ -203,6 +204,7 @@
     a:link {
       color: black;
       text-decoration: none;
+
     }
     a:hover {
       color: hsl(0, 0%, 100%);
@@ -214,7 +216,6 @@
   </style>
 
   <body>
-    <body>
       <h2>
         <input id="title" type="text" placeholder="Title of Quiz" />
       </h2>
@@ -249,6 +250,7 @@
         <div class="add-button-container">
           <button id="answer-choice-btn">Add Answer Choice Above</button>
         </div>
+
       </div>
       <div class="button-container">
         <a id="quizAddLink"
@@ -257,5 +259,4 @@
       </div>
       <script src="Javascript.js"></script>
     </body>
-  </body>
 </html>
