@@ -29,8 +29,12 @@ function initializeQuizPage() {
         questionCount.textContent = "Question " + count;
       }
     });
-    let possibleAnswers = sessionStorage.getItem("");
-  }
+  let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
+  let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
+  possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
+    
+  });
+}
   // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
   function initializeQuestionPage() {
     let answerChoiceCount = 2; //counts how many questions tthere are
@@ -85,24 +89,24 @@ function initializeQuizPage() {
   
       // Flip the value of the flag for the next click
       button.isGreen = !button.isGreen;
-    }
-    //----
-    let quizTitleElement = document.getElementById("title");
-    let submitbtn = document.getElementById("submit-quiz-btn");
-    let possibleAnswerElement = document.get;
-    //Stores the title info once clicking
-    submitbtn.addEventListener("click", function (e) {
-      e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
-      let quizTitle = quizTitleElement.value;
-      sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
-      window.location.href = "Quizpage.html";
-    });
-  }
+   }
+        //----
+  let quizTitleElement = document.getElementById("title");
+  let submitbtn = document.getElementById("submit-quiz-btn");
+  let possibleAnswerElement = document.getElementsByClassName("possibleAnswer")  
+  let possibleAnswerArray;
 
-  // Checks when answers are submitted
-
-  // Getting correct answers in array
-
+  //Stores the title info once clicking
+  submitbtn.addEventListener("click", function (e) {
+    e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
+  
+    let quizTitle = quizTitleElement.value;
+    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value) //.map to extract the values from html
+    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
+    sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
+    window.location.href = "Quizpage.html";
+  });
+  //---
   // First, only starts applying the correct answers in the array once the submit button is pressed. 
   // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
   document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)
