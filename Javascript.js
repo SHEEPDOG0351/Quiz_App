@@ -5,7 +5,6 @@ function initializeQuizPage() {
     quizTitleElement.textContent = quizTitle;
     //--
     let questionCount = document.getElementById("question-count");
-    // let optionTitle = document.querySelectorAll(".option-title");
     let nextbtn = document.getElementById("next");
     let prevbtn = document.getElementById("previous");
     let resetbtn = document.getElementById("resetbtn");
@@ -29,8 +28,12 @@ function initializeQuizPage() {
         questionCount.textContent = "Question " + count;
       }
     });
-    let possibleAnswers = sessionStorage.getItem("");
-  }
+  let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
+  let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
+  possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
+
+  });
+}
   // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
   function initializeQuestionPage() {
     let answerChoiceCount = 2; //counts how many questions there are
@@ -105,7 +108,27 @@ function initializeQuizPage() {
                 }
             });
         });
-        
+     
+    answer_choice_button.addEventListener("click", function () {
+      if (answerChoiceCount < 4) {
+        //
+        // The HTML for the new answer choice
+        let li = document.createElement('li');
+        li.innerHTML = `<li>
+                      <div class="input-wrapper">
+                          <input class = "possibleAnswer"type="text" placeholder="Type possible answer here">
+                          <button id="data-question-id" class='correct-btn'>Select as correct</button>
+                      </div>
+                  </li>`;
+  
+        // Append the new answer choice to the 'ul' container
+        question_container.appendChild(li)
+        answerChoiceCount++;
+      } else {
+        // won't allow user to add more options  max = 4
+        alert("That's enough, buddy!!!");
+      }
+    });
   
     // Event delegation: Attach a single event listener to the 'ul' container
     question_container.addEventListener("click", function (event) {
@@ -149,7 +172,25 @@ function initializeQuizPage() {
   // Checks when answers are submitted
 
   // Getting correct answers in array
+   }
+  
+        //----
+  let quizTitleElement = document.getElementById("title");
+  let submitbtn = document.getElementById("submit-quiz-btn");
+  let possibleAnswerElement = document.getElementsByClassName("possibleAnswer")  
+  let possibleAnswerArray;
 
+  //Stores the title info once clicking
+  submitbtn.addEventListener("click", function (e) {
+    e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
+  
+    let quizTitle = quizTitleElement.value;
+    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value) //.map to extract the values from html
+    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
+    sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
+    window.location.href = "Quizpage.html";
+  });
+  //---
   // First, only starts applying the correct answers in the array once the submit button is pressed. 
   // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
   document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)
@@ -177,11 +218,12 @@ function initializeQuizPage() {
         // Get actual position now of the currently iterated green correct button
         correct_button_position = buttons[position]
         // Grab text associating with that buttons multiple choice response
-        text = correct_button_position.previousElementSibiling.value
+        text = correct_button_position.previousElementSibling.value
         // Push text to the correct_answers array
         correct_answers.push(text)
     }
 }
+  }
   
   //Checks the current page for the specific ID. If found it will initializes the right functions
   document.addEventListener("DOMContentLoaded", function () {
