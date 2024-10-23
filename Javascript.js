@@ -5,11 +5,12 @@ function initializeQuizPage() {
   quizTitleElement.textContent = quizTitle;
   //--
   let questionCount = document.getElementById("question-count");
-  let optionTitle = document.querySelectorAll(".option-title");
+  // let optionTitle = document.querySelectorAll(".option-title");
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
   let count = 1;
+  let points = 0;
   resetbtn.addEventListener("click", function () {
     //reloads the page
     location.reload();
@@ -28,9 +29,7 @@ function initializeQuizPage() {
       questionCount.textContent = "Question " + count;
     }
   });
-  optionTitle.forEach((option) => {
-    // optionTitle.innerHTML =
-  });
+  let possibleAnswers = sessionStorage.getItem("");
 }
 // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
 function initializeQuestionPage() {
@@ -86,9 +85,10 @@ function initializeQuestionPage() {
     // Flip the value of the flag for the next click
     button.isGreen = !button.isGreen;
   }
-
+  //----
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
+  let possibleAnswerElement = document.get;
   //Stores the title info once clicking
   submitbtn.addEventListener("click", function (e) {
     e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
@@ -96,6 +96,7 @@ function initializeQuestionPage() {
     sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
     window.location.href = "Quizpage.html";
   });
+  //---
 }
 
 //Checks the current page for the specific ID. If found it will initializes the right functions
