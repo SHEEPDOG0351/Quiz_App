@@ -67,6 +67,7 @@ function initializeQuizPage() {
         alert("That's enough, buddy!!!");
       }
     });
+    
   
     // Event delegation: Attach a single event listener to the 'ul' container
     question_container.addEventListener("click", function (event) {
