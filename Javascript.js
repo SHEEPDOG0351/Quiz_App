@@ -32,6 +32,10 @@ function initializeQuizPage() {
   let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
   possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
 
+  let questionTitleElement = document.getElementById("question-title");
+  let questionTitle = JSON.parse(sessionStorage.getItem("QuestionTitle").split(",")); // brings the QuestionTitle from initializeQuestionPage
+  questionTitleElement.textContent = questionTitle;
+  
   });
 }
   // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
@@ -174,9 +178,11 @@ function initializeQuizPage() {
   // Getting correct answers in array
    }
   
-        //----
+  //----------
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
+  let questionTitleElement = document.getElementsByClassName("question")
+  let questionSequenceArray;
   let possibleAnswerElement = document.getElementsByClassName("possibleAnswer")  
   let possibleAnswerArray;
 
@@ -185,12 +191,16 @@ function initializeQuizPage() {
     e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
   
     let quizTitle = quizTitleElement.value;
-    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value) //.map to extract the values from html
-    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
     sessionStorage.setItem("QuizTitle", quizTitle); //saves Data into browser
+
+    possibleAnswerArray = Array.from(possibleAnswerElement).map(element => element.value); //.map to extract the values from html
+    sessionStorage.setItem ("PossibleAnswers", JSON.stringify(possibleAnswerArray)); //converts it into aJSON string. Allows it to be stored
+   
+    questionSequenceArray = Array.from(questionTitleElement).map(element => element.value);
+    sessionStorage.setItem ("QuestionTitle",JSON.stringify(questionSequenceArray));
     window.location.href = "Quizpage.html";
   });
-  //---
+  //------------
   // First, only starts applying the correct answers in the array once the submit button is pressed. 
   // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
   document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)

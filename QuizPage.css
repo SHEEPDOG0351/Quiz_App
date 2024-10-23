@@ -120,3 +120,8 @@ input {
   color: black;
   transition: 0.2s ease-in;
 }
+#question-title{
+  text-align: center;
+  font-size: 30px;
+  padding-top: 10px;
+}
