@@ -1,7 +1,7 @@
 function initializeQuizPage() {
   let quizTitleElement = document.getElementById("quiz-title");
-  //-- 
-  let quizTitle = sessionStorage.getItem("QuizTitle");// retrieves data from SessionStorage
+  //--
+  let quizTitle = sessionStorage.getItem("QuizTitle"); // retrieves data from browser
   quizTitleElement.textContent = quizTitle;
   //--
   let questionCount = document.getElementById("question-count");
@@ -17,7 +17,7 @@ function initializeQuizPage() {
   nextbtn.addEventListener("click", function () {
     //question counter up
     count++;
-    questionCount.innerText = "Question" + " " +count;
+    questionCount.textContent = "Question " + count;
   });
   prevbtn.addEventListener("click", function () {
     //question counter down and doesn't let it below '1'
@@ -25,7 +25,7 @@ function initializeQuizPage() {
       alert(`You are at the beginning of the quiz`);
     } else {
       count--;
-      questionCount.innerHTML = "Question" + " " + count;
+      questionCount.textContent = "Question " + count;
     }
   });
   optionTitle.forEach((option) => {
@@ -89,7 +89,7 @@ function initializeQuestionPage() {
 
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
-  //Stores the title info once clicking 
+  //Stores the title info once clicking
   submitbtn.addEventListener("click", function (e) {
     e.preventDefault(); //prevents HTML from submitting form and refreshing page automatically
     let quizTitle = quizTitleElement.value;

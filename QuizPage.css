@@ -9,7 +9,7 @@ body {
   font-family: "Raleway", Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 2px;
-  color:white;
+  color: white;
 }
 header {
   display: flex;
@@ -42,12 +42,12 @@ header {
   color: black;
   text-decoration: none;
 }
-#quiz-title{
-    text-align: center;
-      font-size: 60px;
-      padding-top: 10px;
+#quiz-title {
+  text-align: center;
+  font-size: 60px;
+  padding-top: 10px;
 }
-.question-count {
+#question-count {
   display: flex;
   flex-direction: column;
   padding: 10px 10px;
@@ -98,17 +98,17 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  
+
   padding: 1%;
   padding-top: 21px;
-  
+
   /* min-width: 80%; */
   /* height: 80%; */
 }
 .primary-btn {
-    text-align: center;
+  text-align: center;
   min-width: 10%;
-  min-height:20%;
+  min-height: 20%;
   background-color: hsl(202, 98%, 50%);
   border-radius: 5px;
   border: none;
