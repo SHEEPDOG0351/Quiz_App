@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz 2</title>
+  </head>
   </head>
 
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
-
     * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -21,14 +27,25 @@
       font-family: "Raleway", Arial, sans-serif;
       font-size: 12px;
       letter-spacing: 2px;
+      background-color: black;
+      color: white;
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
     }
 
     h2 {
       display: flex;
       justify-content: center;
+      display: flex;
+      justify-content: center;
     }
 
     input {
+      background-color: transparent;
+      border: none;
+      color: white;
+      padding: 3px;
       background-color: transparent;
       border: none;
       color: white;
@@ -39,9 +56,15 @@
       outline: none;
       border-bottom: 2px solid rgb(3, 161, 252);
       transition: 0.2s ease-in;
+      outline: none;
+      border-bottom: 2px solid rgb(3, 161, 252);
+      transition: 0.2s ease-in;
     }
 
     #title {
+      text-align: center;
+      font-size: 60px;
+      padding-top: 10px;
       text-align: center;
       font-size: 60px;
       padding-top: 10px;
@@ -49,14 +72,19 @@
 
     .question-container {
       margin-left: 20px;
+      margin-left: 20px;
     }
 
     .question {
       font-size: 30px;
       padding-bottom: 10px;
+      font-size: 30px;
+      padding-bottom: 10px;
     }
 
     .input-wrapper {
+      position: relative; /* Allows button to be positioned next to input */
+      margin-bottom: 10px;
       position: relative; /* Allows button to be positioned next to input */
       margin-bottom: 10px;
     }
@@ -65,9 +93,22 @@
       font-size: 20px;
       padding: 5px;
       width: 247px;
+      font-size: 20px;
+      padding: 5px;
+      width: 247px;
     }
 
     .input-wrapper button {
+      position: absolute;
+      left: 250px;
+      top: 50%; /* Set top to 50% to position the button relative to the input */
+      transform: translateY(-50%); /* Vertically center the button */
+      display: none;
+      background-color: rgb(3, 161, 252);
+      color: black;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
       position: absolute;
       left: 250px;
       top: 50%; /* Set top to 50% to position the button relative to the input */
@@ -85,18 +126,31 @@
       border-color: white;
       color: black;
       transition: 0.2s ease-in;
+      background-color: white;
+      border-color: white;
+      color: black;
+      transition: 0.2s ease-in;
     }
 
     .input-wrapper:hover button {
+      display: inline-block;
       display: inline-block;
     }
 
     .button-container {
       display: flex;
       justify-content: center;
+      display: flex;
+      justify-content: center;
     }
 
     .button-container button {
+      color: black;
+      background-color: rgb(3, 161, 252);
+      padding: 5px 60px;
+      border: 2px solid rgb(3, 161, 252);
+      border-radius: 10px;
+      font-size: 25px;
       color: black;
       background-color: rgb(3, 161, 252);
       padding: 5px 60px;
@@ -110,13 +164,24 @@
       color: black;
       border: 2px solid white;
       transition: 0.2s ease-in;
+      background-color: white;
+      color: black;
+      border: 2px solid white;
+      transition: 0.2s ease-in;
     }
 
     .add-button-container {
       padding-left: 6px;
+      padding-left: 6px;
     }
 
     .add-button-container button {
+      color: black;
+      background-color: rgb(3, 161, 252);
+      padding: 5px;
+      border: 2px solid rgb(3, 161, 252);
+      border-radius: 10px;
+      font-size: 15px;
       color: black;
       background-color: rgb(3, 161, 252);
       padding: 5px;
@@ -130,20 +195,25 @@
       color: black;
       border: 2px solid white;
       transition: 0.2s ease-in;
+      background-color: white;
+      color: black;
+      border: 2px solid white;
+      transition: 0.2s ease-in;
     }
-    a:link {
-  color: black;
-  text-decoration: none;
-}
-a:hover {
-  color: hsl(0, 0%, 100%);
-}
-a:visited{
-  color: black;
-  text-decoration: none;
-}
+        a:link {
+        color: black;
+        text-decoration: none;
+    }
+    a:hover {
+        color: hsl(0, 0%, 100%);
+    }
+    a:visited{
+        color: black;
+        text-decoration: none;
+    }
   </style>
 
+  <body>
   <body>
     <h2>
       <input id="title" type="text" placeholder="Title of Quiz" />
@@ -154,13 +224,13 @@ a:visited{
         <li>
           <div class="input-wrapper">
             <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-            <button class="correct-btn">Select as correct</button>
+            <button id="data-question-id" class="correct-btn">Select as correct</button>
           </div>
         </li>
         <li>
           <div class="input-wrapper">
             <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-            <button class="correct-btn">Select as correct</button>
+            <button id="data-question-id" class="correct-btn">Select as correct</button>
           </div>
         </li>
       </ul>
@@ -172,5 +242,6 @@ a:visited{
         <a id = "quizAddLink" ><button id="submit-quiz-btn">Finish Quiz</button></a>
     </div>
     <script src="Javascript.js"></script>
+  </body>
   </body>
 </html>
