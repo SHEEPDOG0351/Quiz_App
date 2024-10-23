@@ -5,7 +5,6 @@ function initializeQuizPage() {
     quizTitleElement.textContent = quizTitle;
     //--
     let questionCount = document.getElementById("question-count");
-    // let optionTitle = document.querySelectorAll(".option-title");
     let nextbtn = document.getElementById("next");
     let prevbtn = document.getElementById("previous");
     let resetbtn = document.getElementById("resetbtn");
@@ -32,7 +31,7 @@ function initializeQuizPage() {
   let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
   let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); //converts string back into an array
   possibleAnswerTitle.forEach((element, index) => {element.textContent = possibleAnswers[index];
-    
+
   });
 }
   // ---------------------------------------------------- Index.html javascript below -----------------------------------------------------------------
@@ -48,15 +47,16 @@ function initializeQuizPage() {
       if (answerChoiceCount < 4) {
         //
         // The HTML for the new answer choice
-        var code = `<li>
+        let li = document.createElement('li');
+        li.innerHTML = `<li>
                       <div class="input-wrapper">
-                          <input type="text" placeholder="Type possible answer here">
+                          <input class = "possibleAnswer"type="text" placeholder="Type possible answer here">
                           <button id="data-question-id" class='correct-btn'>Select as correct</button>
                       </div>
                   </li>`;
   
         // Append the new answer choice to the 'ul' container
-        question_container.innerHTML += code;
+        question_container.appendChild(li)
         answerChoiceCount++;
       } else {
         // won't allow user to add more options  max = 4
@@ -90,6 +90,7 @@ function initializeQuizPage() {
       // Flip the value of the flag for the next click
       button.isGreen = !button.isGreen;
    }
+  
         //----
   let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
@@ -134,11 +135,12 @@ function initializeQuizPage() {
         // Get actual position now of the currently iterated green correct button
         correct_button_position = buttons[position]
         // Grab text associating with that buttons multiple choice response
-        text = correct_button_position.previousElementSibiling.value
+        text = correct_button_position.previousElementSibling.value
         // Push text to the correct_answers array
         correct_answers.push(text)
     }
 }
+  }
   
   //Checks the current page for the specific ID. If found it will initializes the right functions
   document.addEventListener("DOMContentLoaded", function () {
