@@ -35,6 +35,54 @@ function initializeQuizPage() {
   questionTitleElement.textContent = questionTitle;
   });
 }
+
+// Display question 
+
+//Getting amount of correct answers from user
+
+let userAnswers = {}; // To store the user's answers, with question IDs as keys
+
+// Assuming each question block has a unique ID like 'question-1', 'question-2', etc.
+let questionBlocks = document.querySelectorAll('.question-block');
+
+questionBlocks.forEach((questionBlock) => {
+    let questionId = questionBlock.id; // Unique ID of the question (e.g., 'question-1')
+    let answerChoices = questionBlock.querySelectorAll('input[name="question"]'); // Radio buttons or checkboxes
+
+    // Add event listeners to each answer choice
+    answerChoices.forEach((choice) => {
+        choice.addEventListener('change', function() {
+            userAnswers[questionId] = this.value; // Store the user's selected answer for the question
+            console.log('User selected answer for ' + questionId + ': ' + this.value);
+        });
+    });
+});
+
+// Event Listener added to submit button to then run the calculation of how many questions the user got right 
+document.getElementById('submit-quiz-btn').addEventListener('click', function() {
+    checkUserAnswers(userAnswers); // Pass the user's answers for comparison
+});
+
+// Function to check user answers against correct answers
+function checkUserAnswers(userAnswers) {
+let correctAnswers = { // Example of correct answers (these should be set dynamically)
+    'question-1': 'Answer 1',
+    'question-2': 'Answer 3',
+    // Add correct answers for each question
+};
+
+let score = 0;
+for (let questionId in correctAnswers) {
+    if (userAnswers[questionId] === correctAnswers[questionId]) {
+        score++; // Increment score if the user's answer matches the correct answer
+    }
+}
+
+console.log(`You scored a ${score}/${userAnswers.length}!`);
+
+}
+// ---------------------------------------------------------- Index.html Javascript Below ---------------------------------------------------------------
+
 function initializeQuestionPage() {
   let answerChoiceCount = 2; // Tracks the number of answer choices per question
   let add_button_container = document.querySelector('.add-button-container');
