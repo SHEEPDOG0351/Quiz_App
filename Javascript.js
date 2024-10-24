@@ -2,24 +2,24 @@ function initializeQuizPage() {
     let quizTitleElement = document.getElementById("quiz-title");
     let quizTitle = sessionStorage.getItem("QuizTitle"); // retrieves data from browser
     quizTitleElement.textContent = quizTitle;
-    
+
     let questionCount = document.getElementById("question-count");
     let nextbtn = document.getElementById("next");
     let prevbtn = document.getElementById("previous");
     let resetbtn = document.getElementById("resetbtn");
     let count = 1;
-    
+
     resetbtn.addEventListener("click", function () {
         //reloads the page
         location.reload();
     });
-    
+
     nextbtn.addEventListener("click", function () {
         //question counter up
         count++;
         questionCount.textContent = "Question " + count;
     });
-    
+
     prevbtn.addEventListener("click", function () {
         //question counter down and doesn't let it below '1'
         if (count <= 1) {
@@ -29,14 +29,15 @@ function initializeQuizPage() {
             questionCount.textContent = "Question " + count;
         }
     });
-    
+
     // Load possible answers from session storage
     let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
-    let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers").split(',')); // Converts string back into an array
+    let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers")); // Converts string back into an array
     possibleAnswerTitle.forEach((element, index) => {
         element.textContent = possibleAnswers[index];
     });
 }
+
 function initializeQuestionPage() {
     let answerChoiceCount = 2; // Tracks the number of answer choices per question
     let add_button_container = document.querySelector('.add-button-container');
@@ -92,8 +93,6 @@ function initializeQuestionPage() {
     // Function to handle adding a new answer choice
     function addAnswerChoice(event) {
         let answerList = event.target.closest('.question-block').querySelector('.answer-list');
-
-        if (answerChoiceCount < 4) {
             let li = document.createElement('li');
             li.innerHTML = `
                 <div class="input-wrapper">
@@ -102,9 +101,6 @@ function initializeQuestionPage() {
                 </div>`;
             answerList.appendChild(li);
             answerChoiceCount++;
-        } else {
-            alert("That's enough, buddy!");
-        }
     }
 
     // Event delegation: Attach a single event listener to the body for "Select as correct" buttons
@@ -132,39 +128,23 @@ function initializeQuestionPage() {
     }
 
     // Getting correct answers in array
+    document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers);
 
-  // First, only starts applying the correct answers in the array once the submit button is pressed. 
-  // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
-  document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)
+    function get_correct_answers() {
+        let buttons = document.querySelectorAll('.correct-btn');
+        let correct_buttons = [];
+        let correct_answers = [];
 
-  function get_correct_answers() {
-    let buttons = document.querySelectorAll('.correct-btn');
-    let num_correct_buttons = 0
-    let correct_buttons = []
-    let numerical_position = 0
-    let text = ''
-    
-    for (i = 0; i <= buttons.length; i++) {
-        if (buttons.style.backgroundColor == 'rgb(52, 235, 82)') {
-            num_correct_buttons++
-            correct_buttons.push(buttons[i])
-        } else {
-            continue
-        }
+        buttons.forEach((button, index) => {
+            if (button.style.backgroundColor === 'rgb(52, 235, 82)') {
+                correct_buttons.push(button);
+                let correct_answer_text = button.previousElementSibling.value;
+                correct_answers.push(correct_answer_text);
+            }
+        });
+
+        console.log(correct_answers);  // This array will now hold all the correct answers.
     }
-    // Should handle pulling correct buttons associated multiple choice string
-    // First, the loop will continue until it reaches the length of the amount of correct buttons
-    for (i of correct_buttons) {
-        // Get numerical position of currently iterated correct button
-        numerical_position = correct_buttons[i]
-        // Get actual position now of the currently iterated green correct button
-        correct_button_position = buttons[position]
-        // Grab text associating with that buttons multiple choice response
-        text = correct_button_position.previousElementSibiling.value
-        // Push text to the correct_answers array
-        correct_answers.push(text)
-    }
-}
 
     let quizTitleElement = document.getElementById("title");
     let submitbtn = document.getElementById("submit-quiz-btn");
