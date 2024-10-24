@@ -6,10 +6,28 @@ function initializeQuizPage() {
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
-  
+  let count = 1;
+  resetbtn.addEventListener("click", function () {
+      //reloads the page
+      location.reload();
+  });
+  nextbtn.addEventListener("click", function () {
+      //question counter up
+      count++;
+      questionCount.textContent = "Question " + count;
+  });
+  // Adds event listener
+  prevbtn.addEventListener("click", function () {
+      //question counter down and doesn't let it below '1'
+      if (count <= 1) {
+          alert("You are at the beginning of the quiz");
+      } else {
+          count--;
+          questionCount.textContent = "Question " + count;
+      }
+  });  
   let userAnswers = []; //stores Users choices
   let count = 0;
-  
   // Load possible answers from session storage
   
   let qAndA = JSON.parse(sessionStorage.getItem("QuestionWithAnswers")); // Converts string back into an array of Qs and As
