@@ -37,7 +37,6 @@ function initializeQuizPage() {
         element.textContent = possibleAnswers[index];
     });
 }
-
 function initializeQuestionPage() {
     let answerChoiceCount = 2; // Tracks the number of answer choices per question
     let add_button_container = document.querySelector('.add-button-container');
@@ -131,6 +130,41 @@ function initializeQuestionPage() {
         }
         button.isGreen = !button.isGreen;
     }
+
+    // Getting correct answers in array
+
+  // First, only starts applying the correct answers in the array once the submit button is pressed. 
+  // Mainly just because if people were to switch the correct answers, there would have to be extra code deleting the before correct answer from the array and adding the new one which is just uneccesary.
+  document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers)
+
+  function get_correct_answers() {
+    let buttons = document.querySelectorAll('.correct-btn');
+    let num_correct_buttons = 0
+    let correct_buttons = []
+    let numerical_position = 0
+    let text = ''
+    
+    for (i = 0; i <= buttons.length; i++) {
+        if (buttons.style.backgroundColor == 'rgb(52, 235, 82)') {
+            num_correct_buttons++
+            correct_buttons.push(buttons[i])
+        } else {
+            continue
+        }
+    }
+    // Should handle pulling correct buttons associated multiple choice string
+    // First, the loop will continue until it reaches the length of the amount of correct buttons
+    for (i of correct_buttons) {
+        // Get numerical position of currently iterated correct button
+        numerical_position = correct_buttons[i]
+        // Get actual position now of the currently iterated green correct button
+        correct_button_position = buttons[position]
+        // Grab text associating with that buttons multiple choice response
+        text = correct_button_position.previousElementSibiling.value
+        // Push text to the correct_answers array
+        correct_answers.push(text)
+    }
+}
 
     let quizTitleElement = document.getElementById("title");
     let submitbtn = document.getElementById("submit-quiz-btn");
