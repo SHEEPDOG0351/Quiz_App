@@ -6,10 +6,8 @@ function initializeQuizPage() {
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
-  
   let userAnswers = []; //stores Users choices
   let count = 0;
-  
   // Load possible answers from session storage
   let qAndA = JSON.parse(sessionStorage.getItem("QuestionWithAnswers")); // Converts string back into an array of Qs and As
 
