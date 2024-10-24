@@ -149,50 +149,31 @@
 <body>
     <h2>
         <input id="title" type="text" placeholder="Title of Quiz" />
-      </h2>
-      <div class="question-container">
+    </h2>
+    <div class="question-container">
         <!-- First Question Block -->
         <div class="question-block" id="question-1">
-          <input
-            class="question"
-            type="text"
-            placeholder="Type Question Here"
-          />
-          <ul class="answer-list">
-            <li>
-              <div class="input-wrapper">
-                <input
-                  class="possibleAnswer"
-                  type="text"
-                  placeholder="Type possible answer here"
-                />
-                <button class="correct-btn">Select as correct</button>
-              </div>
-            </li>
-            <li>
-              <div class="input-wrapper">
-                <input
-                  class="possibleAnswer"
-                  type="text"
-                  placeholder="Type possible answer here"
-                />
-                <button class="correct-btn">Select as correct</button>
-              </div>
-            </li>
-          </ul>
-          
+            <input class="question" type="text" placeholder="Type Question Here" />
+            <ul class="answer-list">
+                <li>
+                    <div class="input-wrapper">
+                        <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                        <button class="correct-btn">Select as correct</button>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-wrapper">
+                        <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                        <button class="correct-btn">Select as correct</button>
+                    </div>
+                </li>
+            </ul>
+            <button class="add_buttons answer-choice-btn">Add Answer Choice Above</button>
         </div>
 
         <!-- Add New Question Button -->
         <div class="add-button-container">
-          <button class="add_buttons" id="new-question-btn">
-            Add New Question Below
-          </button>
-        </div>
-          </li>
-        </ul>
-        <div class="add-button-container">
-          <button id="answer-choice-btn">Add Answer Choice Above</button>
+            <button class="add_buttons" id="new-question-btn">Add New Question Below</button>
         </div>
     </div>
 
