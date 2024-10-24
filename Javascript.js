@@ -38,7 +38,10 @@ function initializeQuizPage() {
   }
 
   displayQuestion();
-
+ let submitbtn = document.getElementById("submit-quiz-btn")
+  submitbtn.addEventListener("click", function () {
+      scoreCalculation();
+  });
   resetbtn.addEventListener("click", function () {
     //reloads the page
     location.reload();
@@ -55,7 +58,6 @@ function initializeQuizPage() {
       displayQuestion();
     } else {
       alert("You Completed the test");
-      scoreCalculation();
     }
   });
 
