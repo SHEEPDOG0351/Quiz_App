@@ -6,34 +6,69 @@ function initializeQuizPage() {
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
-  let count = 1;
-  resetbtn.addEventListener("click", function () {
-      //reloads the page
-      location.reload();
-  });
-  nextbtn.addEventListener("click", function () {
-      //question counter up
-      count++;
-      questionCount.textContent = "Question " + count;
-  });
-  prevbtn.addEventListener("click", function () {
-      //question counter down and doesn't let it below '1'
-      if (count <= 1) {
-          alert("You are at the beginning of the quiz");
-      } else {
-          count--;
-          questionCount.textContent = "Question " + count;
-      }
-  });
+  
+  let userAnswers = []; //stores Users choices
+  let count = 0;
+  
   // Load possible answers from session storage
-  let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
-  let possibleAnswers = JSON.parse(sessionStorage.getItem("PossibleAnswers")); // Converts string back into an array
-  possibleAnswerTitle.forEach((element, index) => {
-      element.textContent = possibleAnswers[index];
-      let questionTitleElement = document.getElementById("question-title");
-  let questionTitle = JSON.parse(sessionStorage.getItem("QuestionTitle").split(",")); // brings the QuestionTitle from initializeQuestionPage
-  questionTitleElement.textContent = questionTitle;
+  
+  let qAndA = JSON.parse(sessionStorage.getItem("QuestionWithAnswers")); // Converts string back into an array of Qs and As
+
+  function displayQuestion(){
+    questionCount.textContent = "Question " + (count + 1)
+    let questionTitleElement = document.getElementsByClassName("question-title");
+    if(questionTitleElement.length > 0){
+      questionTitleElement[0].textContent = qAndA[count].question; //gets question from the object
+
+      let possibleAnswerTitle = Array.from(document.getElementsByClassName("option-title"));
+      let possibleAnswers = qAndA[count].answers; //gets answer for the current question
+      possibleAnswerTitle.forEach((element, index) => {
+        element.textContent = possibleAnswers[index];
+    });
+  }
+}
+function scoreCalculation() { //calculates the score
+  let correctAnswers = JSON.parse(sessionStorage.getItem("CorrectAnswers")); //brings the correct answers 
+  let score = 0;
+  //Compares users answer with the right answer
+  userAnswers.forEach((answer, index) => {
+    if (answer ===correctAnswers[index]){
+      score++
+    }
   });
+  alert(`You got ${score} out of ${correctAnswers.length} right`)
+}
+displayQuestion()
+resetbtn.addEventListener("click", function () {
+  //reloads the page
+  location.reload();
+});
+nextbtn.addEventListener("click", function () {
+  //gets the selected answer for the question given
+let selectedAnswer = document.querySelector('input[name="question"]:checked');
+if(selectedAnswer){
+  let label = document.querySelector(`label[for="${selectedAnswer.id}"]`)
+  userAnswers[count] = label.textContent //stores what the user has selected
+}
+  if (count < qAndA.length - 1){
+    count++;
+    displayQuestion();
+  }
+  else{
+    alert("You Completed the test")
+    scoreCalculation();
+  }
+});
+prevbtn.addEventListener("click", function () {
+  //question counter down and doesn't let it below '1'
+  if (count <= 0) {
+      alert("You are at the beginning of the quiz");
+  } else {
+      count--;
+      displayQuestion();
+}
+});
+
 }
 
 // Display question 
@@ -86,43 +121,7 @@ console.log(`You scored a ${score}/${userAnswers.length}!`);
 function initializeQuestionPage() {
   let answerChoiceCount = 2; // Tracks the number of answer choices per question
   let add_button_container = document.querySelector('.add-button-container');
-  let correct_answers = [];
 
-  // Attach event listener to the existing "Add Answer Choice" button (for the first question)
-  attachAnswerChoiceListener();
-
-  // Handles the creation of a new question
-  let new_question_button = document.getElementById('new-question-btn');
-  new_question_button.addEventListener('click', function () {
-      let newQuestionId = `question-${document.querySelectorAll('.question-block').length + 1}`;
-
-      // Create new question block
-      let questionBlock = `
-          <div class="question-block" id="${newQuestionId}">
-              <input class="question" type="text" placeholder="Type Question Here" />
-              <ul class="answer-list">
-                  <li>
-                      <div class="input-wrapper">
-                          <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-                          <button class="correct-btn">Select as correct</button>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="input-wrapper">
-                          <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-                          <button class="correct-btn">Select as correct</button>
-                      </div>
-                  </li>
-              </ul>
-              <button class="add_buttons answer-choice-btn">Add Answer Choice Above</button>
-          </div>
-      `;
-
-      add_button_container.insertAdjacentHTML('beforebegin', questionBlock);
-
-      // Attach event listener to the new question's "Add Answer Choice" button
-      attachAnswerChoiceListener();
-  });
 
   // Function to attach event listener to "Add Answer Choice" button
   function attachAnswerChoiceListener() {
@@ -134,7 +133,7 @@ function initializeQuestionPage() {
           button.addEventListener('click', addAnswerChoice);
       });
   }
-
+  
   // Function to handle adding a new answer choice
   function addAnswerChoice(event) {
       let answerList = event.target.closest('.question-block').querySelector('.answer-list');
@@ -147,6 +146,41 @@ function initializeQuestionPage() {
           answerList.appendChild(li);
           answerChoiceCount++;
   }
+    // Attach event listener to the existing "Add Answer Choice" button (for the first question)
+    attachAnswerChoiceListener();
+  
+   // Handles the creation of a new question
+   let new_question_button = document.getElementById('new-question-btn');
+   new_question_button.addEventListener('click', function () {
+       let newQuestionId = `question-${document.querySelectorAll('.question-block').length + 1}`;
+ 
+       // Create new question block
+       let questionBlock = `
+           <div class="question-block" id="${newQuestionId}">
+               <input class="question" type="text" placeholder="Type Question Here" />
+               <ul class="answer-list">
+                   <li>
+                       <div class="input-wrapper">
+                           <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                           <button class="correct-btn">Select as correct</button>
+                       </div>
+                   </li>
+                   <li>
+                       <div class="input-wrapper">
+                           <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                           <button class="correct-btn">Select as correct</button>
+                       </div>
+                   </li>
+               </ul>
+               <button class="answer-choice-btn">Add Answer Choice Above</button>
+           </div>
+       `;
+ 
+       add_button_container.insertAdjacentHTML('beforebegin', questionBlock);
+ 
+       // Attach event listener to the new question's "Add Answer Choice" button
+       attachAnswerChoiceListener();
+   });
 
   // Event delegation: Attach a single event listener to the body for "Select as correct" buttons
   document.body.addEventListener("click", function (event) {
@@ -172,39 +206,47 @@ function initializeQuestionPage() {
       button.isGreen = !button.isGreen;
   }
 
-  // Getting correct answers in array
-  document.querySelector('#submit-quiz-btn').addEventListener('click', get_correct_answers);
-  function get_correct_answers() {
-      let buttons = document.querySelectorAll('.correct-btn');
-      let correct_buttons = [];
-      let correct_answers = [];
-      buttons.forEach((button, index) => {
-          if (button.style.backgroundColor === 'rgb(52, 235, 82)') {
-              correct_buttons.push(button);
-              let correct_answer_text = button.previousElementSibling.value;
-              correct_answers.push(correct_answer_text);
-          }
-      });
-
-      console.log(correct_answers);  // This array will now hold all the correct answers.
-  }
-
-  let quizTitleElement = document.getElementById("title");
   let submitbtn = document.getElementById("submit-quiz-btn");
 
   // Stores the title and possible answers in session storage on submit
-  submitbtn.addEventListener("click", function (e) {
-      e.preventDefault(); // Prevents form submission from refreshing the page
-      let questionTitleElement = document.getElementsByClassName("question")
-      let questionSequenceArray;
-      let quizTitle = quizTitleElement.value;
-      let possibleAnswerElement = Array.from(document.getElementsByClassName("possibleAnswer")).map(element => element.value);
-      questionSequenceArray = Array.from(questionTitleElement).map(element => element.value);
-      sessionStorage.setItem ("QuestionTitle",JSON.stringify(questionSequenceArray));
-      sessionStorage.setItem("PossibleAnswers", JSON.stringify(possibleAnswerElement));
-      sessionStorage.setItem("QuizTitle", quizTitle); // Saves Data into browser
-      window.location.href = "Quizpage.html"; // Navigates to the quiz page
-  });
+  submitbtn.addEventListener("click", submitBTN);
+
+  function submitBTN(e){
+    e.preventDefault(); // Prevents form submission from refreshing the page
+  
+    let buttons = document.querySelectorAll('.correct-btn');
+        let correct_buttons = [];
+        let correct_answers = [];
+        let questionsWithAnswers = [];
+
+        buttons.forEach((button) => {
+            if (button.style.backgroundColor === 'rgb(52, 235, 82)') {
+                correct_buttons.push(button);
+                let correct_answer_text = button.previousElementSibling.value;
+                correct_answers.push(correct_answer_text);
+            }
+        });
+  
+        console.log(correct_answers);  // This array will now hold all the correct answers.
+        let questionTitleElement = document.getElementsByClassName("question")
+        let quizTitleElement = document.getElementById("title");
+        Array.from(questionTitleElement).forEach((questionElement, index) => {
+          let questionText = questionElement.value;
+          let possibleAnswerElements = questionElement.closest(".question-block").querySelectorAll(".possibleAnswer");
+          let possibleAnswers = Array.from(possibleAnswerElements).map(element => element.value);
+          //Creates Object for the Q and As
+          questionsWithAnswers.push({
+            question: questionText,
+            answers: possibleAnswers
+          })
+        })
+
+        let quizTitle = quizTitleElement.value;
+        sessionStorage.setItem ("QuestionWithAnswers", JSON.stringify(questionsWithAnswers));
+        sessionStorage.setItem("CorrectAnswers", JSON.stringify(correct_answers));
+        sessionStorage.setItem("QuizTitle", quizTitle); // Saves Data into browser
+        window.location.href = "Quizpage.html"; // Navigates to the quiz page
+  }
 }
 
 // Initialize quiz or question page depending on the current page's ID
