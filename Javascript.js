@@ -6,7 +6,8 @@ function initializeQuizPage() {
   let nextbtn = document.getElementById("next");
   let prevbtn = document.getElementById("previous");
   let resetbtn = document.getElementById("resetbtn");
-  let correctAnswers = JSON.parse(sessionStorage.getItem("CorrectAnswers"));
+  
+  let userAnswers = []; //stores Users choices
   let count = 0;
   
   // Load possible answers from session storage
@@ -26,18 +27,36 @@ function initializeQuizPage() {
     });
   }
 }
+function scoreCalculation() { //calculates the score
+  let correctAnswers = JSON.parse(sessionStorage.getItem("CorrectAnswers")); //brings the correct answers 
+  let score = 0;
+  //Compares users answer with the right answer
+  userAnswers.forEach((answer, index) => {
+    if (answer ===correctAnswers[index]){
+      score++
+    }
+  });
+  alert(`You got ${score} out of ${correctAnswers.length} right`)
+}
 displayQuestion()
 resetbtn.addEventListener("click", function () {
   //reloads the page
   location.reload();
 });
 nextbtn.addEventListener("click", function () {
+  //gets the selected answer for the question given
+let selectedAnswer = document.querySelector('input[name="question"]:checked');
+if(selectedAnswer){
+  let label = document.querySelector(`label[for="${selectedAnswer.id}"]`)
+  userAnswers[count] = label.textContent //stores what the user has selected
+}
   if (count < qAndA.length - 1){
     count++;
     displayQuestion();
   }
   else{
     alert("You Completed the test")
+    scoreCalculation();
   }
 });
 prevbtn.addEventListener("click", function () {
@@ -53,44 +72,8 @@ prevbtn.addEventListener("click", function () {
 }
 function initializeQuestionPage() {
   let answerChoiceCount = 2; // Tracks the number of answer choices per question
-  const add_button_container = document.querySelector('.add-button-container');
-  let correct_answers = [];
+  let add_button_container = document.querySelector('.add-button-container');
 
-  // Attach event listener to the existing "Add Answer Choice" button (for the first question)
-  attachAnswerChoiceListener();
-
-  // Handles the creation of a new question
-  let new_question_button = document.getElementById('new-question-btn');
-  new_question_button.addEventListener('click', function () {
-      let newQuestionId = `question-${document.querySelectorAll('.question-block').length + 1}`;
-
-      // Create new question block
-      let questionBlock = `
-          <div class="question-block" id="${newQuestionId}">
-              <input class="question" type="text" placeholder="Type Question Here" />
-              <ul class="answer-list">
-                  <li>
-                      <div class="input-wrapper">
-                          <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-                          <button class="correct-btn">Select as correct</button>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="input-wrapper">
-                          <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
-                          <button class="correct-btn">Select as correct</button>
-                      </div>
-                  </li>
-              </ul>
-              <button class="add_buttons answer-choice-btn">Add Answer Choice Above</button>
-          </div>
-      `;
-
-      add_button_container.insertAdjacentHTML('beforebegin', questionBlock);
-
-      // Attach event listener to the new question's "Add Answer Choice" button
-      attachAnswerChoiceListener();
-  });
 
   // Function to attach event listener to "Add Answer Choice" button
   function attachAnswerChoiceListener() {
@@ -102,7 +85,7 @@ function initializeQuestionPage() {
           button.addEventListener('click', addAnswerChoice);
       });
   }
-
+  
   // Function to handle adding a new answer choice
   function addAnswerChoice(event) {
       let answerList = event.target.closest('.question-block').querySelector('.answer-list');
@@ -115,6 +98,41 @@ function initializeQuestionPage() {
           answerList.appendChild(li);
           answerChoiceCount++;
   }
+    // Attach event listener to the existing "Add Answer Choice" button (for the first question)
+    attachAnswerChoiceListener();
+  
+   // Handles the creation of a new question
+   let new_question_button = document.getElementById('new-question-btn');
+   new_question_button.addEventListener('click', function () {
+       let newQuestionId = `question-${document.querySelectorAll('.question-block').length + 1}`;
+ 
+       // Create new question block
+       let questionBlock = `
+           <div class="question-block" id="${newQuestionId}">
+               <input class="question" type="text" placeholder="Type Question Here" />
+               <ul class="answer-list">
+                   <li>
+                       <div class="input-wrapper">
+                           <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                           <button class="correct-btn">Select as correct</button>
+                       </div>
+                   </li>
+                   <li>
+                       <div class="input-wrapper">
+                           <input class="possibleAnswer" type="text" placeholder="Type possible answer here" />
+                           <button class="correct-btn">Select as correct</button>
+                       </div>
+                   </li>
+               </ul>
+               <button class="answer-choice-btn">Add Answer Choice Above</button>
+           </div>
+       `;
+ 
+       add_button_container.insertAdjacentHTML('beforebegin', questionBlock);
+ 
+       // Attach event listener to the new question's "Add Answer Choice" button
+       attachAnswerChoiceListener();
+   });
 
   // Event delegation: Attach a single event listener to the body for "Select as correct" buttons
   document.body.addEventListener("click", function (event) {
