@@ -16,6 +16,7 @@ function initializeQuizPage() {
       count++;
       questionCount.textContent = "Question " + count;
   });
+  // Adds event listener
   prevbtn.addEventListener("click", function () {
       //question counter down and doesn't let it below '1'
       if (count <= 1) {
