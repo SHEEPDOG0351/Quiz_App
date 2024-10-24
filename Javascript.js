@@ -8,6 +8,7 @@ function initializeQuizPage() {
     let prevbtn = document.getElementById("previous");
     let resetbtn = document.getElementById("resetbtn");
     let count = 1;
+    let question_title = document.querySelectorAll('.question_title')
 
     resetbtn.addEventListener("click", function () {
         //reloads the page
@@ -37,6 +38,10 @@ function initializeQuizPage() {
         element.textContent = possibleAnswers[index];
     });
 }
+// Display question 
+
+
+// ---------------------------------------------------------- Index.html Javascript Below ---------------------------------------------------------------
 
 function initializeQuestionPage() {
     let answerChoiceCount = 2; // Tracks the number of answer choices per question
